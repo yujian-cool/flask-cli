@@ -1,0 +1,39 @@
+version: '3.1'
+services:
+    mysql:
+        image: 'mariadb:10.6'
+        environment:
+            - MYSQL_ROOT_PASSWORD=password
+            - MYSQL_DATABASE=database
+            - MYSQL_USER=user
+            - MYSQL_PASSWORD=password
+        ports:
+          - "3306:3306"
+        container_name: 'mysql'
+        volumes:
+          - './mysql_data:/var/lib/mysql'
+        restart: always
+    redis:
+        image: 'redis:alpine'
+        restart: always
+    api:
+        build: .
+        working_dir: /code
+        volumes:
+          - ../xiangyu_api:/code
+        command:
+          - sh
+          - -c
+          - |
+            export FLASK_APP=migrate.py
+            flask db init
+            flask db migrate -m 'init'
+            flask db upgrade
+            export FLASK_APP=app.py
+            python app.py
+        ports:
+          - "5000:5000"
+        depends_on:
+          - mysql
+          - redis
+        restart: always
