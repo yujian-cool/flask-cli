@@ -27,7 +27,11 @@
 	
 	# 安装redis连接库
 	pipenv install redis
-	
+
+	# 所有需要的包使用pipenv安装
+### 项目配置
+	# redis mysql数据库密码等配置在docker-compose文件和config文件中配置需一致
+
 ### docker服务编排
     # 切换到工作目录
     cd flask-cli
