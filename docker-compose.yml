@@ -20,7 +20,7 @@ services:
         build: .
         working_dir: /code
         volumes:
-          - ../xiangyu_api:/code
+          - ../flask-cli:/code
         command:
           - sh
           - -c
