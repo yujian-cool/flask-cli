@@ -7,9 +7,8 @@ import config
 
 app = Flask(__name__)
 
+db.init_app(app)
 app.config.from_object(config)
-
 migrate = Migrate(app, db)
-
 # 按需引入
 from model.model import User
